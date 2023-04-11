@@ -104,4 +104,19 @@ select {
     opacity: 0;
 }
 
+#notes {
+  margin-top: 180px;
+  text-align: center;
+  letter-spacing: 3px;
+}
 
+.nav1-button {
+  margin-left: 100px;
+  position: absolute;
+  border: 0px solid black;
+  color: black;
+  font-family:Arial, Helvetica, sans-serif;
+  background-color: white;
+  text-decoration: underline;
+  font-size: 18px;
+}

@@ -11,6 +11,10 @@ const venusTextureMap = textureLoader.load('assets/venus.jpg');
 const marsTextureMap = textureLoader.load('assets/mars.webp');
 const jupiterTextureMap = textureLoader.load('assets/jupiter.jpg');
 const saturnTextureMap = textureLoader.load('assets/saturn.webp');
+const ringTextureMap = textureLoader.load('assets/rings.jpg');
+const uranusTextureMap = textureLoader.load('assets/uranus.webp');
+const neptuneTextureMap = textureLoader.load('assets/neptune.webp');
+
 
 const scene = new THREE.Scene();
 scene.background = backgroup;
@@ -107,12 +111,12 @@ saturn.position.set(300, 0, 0)
 scene.add( saturn );
 
 /* ring */
-const saturnRing = new THREE.EllipseCurve(300, 0, 23, 23, 0, 2 * Math.PI, false, 0);
-const saturnRingMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 1 });
-const saturnRingGeometry = new THREE.BufferGeometry().setFromPoints(saturnRing.getPoints(200));
-const saturnRingMesh = new THREE.Line(saturnRingGeometry, saturnRingMaterial);
-saturnRingMesh.rotateX(-Math.PI/2)
-scene.add(saturnRingMesh);
+const ringGeometry = new THREE.RingGeometry(28, 22, 32);
+const ringMaterial = new THREE.MeshBasicMaterial({ map: ringTextureMap, side: THREE.DoubleSide, transparent: true });
+const ringMesh = new THREE.Mesh(ringGeometry, ringMaterial);
+ringMesh.rotation.x = Math.PI / 2;
+ringMesh.position.set(300, 0, 0);
+scene.add(ringMesh);
 
 /* saturn orbit */
 const saturnOrbit = new THREE.EllipseCurve(0, 0, 300, 360, 0, 2 * Math.PI, false, 0);
@@ -122,6 +126,38 @@ const saturnOrbitGeometry = new THREE.BufferGeometry().setFromPoints(saturnOrbit
 const saturnOrbitMesh = new THREE.Line(saturnOrbitGeometry, saturnOrbitMaterial);
 saturnOrbitMesh.rotateX(-Math.PI/2)
 scene.add(saturnOrbitMesh);
+
+/* uranus */
+const uranus_geometry = new THREE.SphereGeometry( 15.2 );
+const uranus_material = new THREE.MeshBasicMaterial( { map: uranusTextureMap } );
+const uranus = new THREE.Mesh( uranus_geometry, uranus_material );
+uranus.position.set(350, 0, 0)
+scene.add( uranus );
+
+/* uranus orbit */
+const uranusOrbit = new THREE.EllipseCurve(0, 0, 350, 400, 0, 2 * Math.PI, false, 0);
+
+const uranusOrbitMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.2 });
+const uranusOrbitGeometry = new THREE.BufferGeometry().setFromPoints(uranusOrbit.getPoints(200));
+const uranusOrbitMesh = new THREE.Line(uranusOrbitGeometry, uranusOrbitMaterial);
+uranusOrbitMesh.rotateX(-Math.PI/2)
+scene.add(uranusOrbitMesh);
+
+/* neptune */
+const neptune_geometry = new THREE.SphereGeometry( 15 );
+const neptune_material = new THREE.MeshBasicMaterial( { map: neptuneTextureMap } );
+const neptune = new THREE.Mesh( neptune_geometry, neptune_material );
+neptune.position.set(420, 0, 0)
+scene.add( neptune );
+
+/* neptune orbit */
+const neptuneOrbit = new THREE.EllipseCurve(0, 0, 420, 460, 0, 2 * Math.PI, false, 0);
+
+const neptuneOrbitMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.2 });
+const neptuneOrbitGeometry = new THREE.BufferGeometry().setFromPoints(neptuneOrbit.getPoints(200));
+const neptuneOrbitMesh = new THREE.Line(neptuneOrbitGeometry, neptuneOrbitMaterial);
+neptuneOrbitMesh.rotateX(-Math.PI/2)
+scene.add(neptuneOrbitMesh);
 
 /* earth */
 const e_material = new THREE.MeshBasicMaterial( { map: earthTextureMap } );
@@ -139,10 +175,8 @@ earth.add( moon );
 scene.add( earth );
 
 /* orbit */
-// Create the Earth's orbit path
 const earthOrbit = new THREE.EllipseCurve(0, 0, 150, 230, 0, 2 * Math.PI, false, 0);
 
-// Create the Earth's orbit path mesh
 const earthOrbitMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.2 });
 const earthOrbitGeometry = new THREE.BufferGeometry().setFromPoints(earthOrbit.getPoints(200));
 const earthOrbitMesh = new THREE.Line(earthOrbitGeometry, earthOrbitMaterial);
@@ -155,6 +189,8 @@ const venusOrbitSpeed = 0.000018;
 const marsOrbitSpeed = 0.000005;
 const jupiterOrbitSpeed = 0.000001;
 const saturnOrbitSpeed = 0.0000005;
+const uranusOrbitSpeed = 0.0000002;
+const neptuneOrbitSpeed = 0.0000001;
 const earthOrbitSpeed = 0.00001;
 const moonOrbitRadius = 30;
 const moonOrbitSpeed = 80;
@@ -169,8 +205,8 @@ function animate() {
 	mercury.rotation.y -= 0.003;
 	const mercury_time = mercuryOrbitSpeed * performance.now();
 	const mercury_t = (mercury_time % loopTime) / loopTime;
-	let mercury_p = mercuryOrbit.getPoint(-mercury_t);
-	mercury.position.x = mercury_p.x;
+	let mercury_p = mercuryOrbit.getPoint(mercury_t);
+	mercury.position.x = -mercury_p.x;
 	mercury.position.z = mercury_p.y;
 	
 	/* venus */
@@ -185,8 +221,8 @@ function animate() {
 	mars.rotation.y += 0.01;
 	const mars_time = marsOrbitSpeed * performance.now();
 	const mars_t = (mars_time % loopTime) / loopTime;
-	let mars_p = marsOrbit.getPoint(-mars_t);
-	mars.position.x = mars_p.x;
+	let mars_p = marsOrbit.getPoint(mars_t);
+	mars.position.x = -mars_p.x;
 	mars.position.z = mars_p.y;
 
 	/* jupiter */
@@ -198,13 +234,30 @@ function animate() {
 	jupiter.position.z = jupiter_p.y;
 
 	/* saturn */
-	// saturn.rotation.y += 0.01;
-	// const saturn_time = saturnOrbitSpeed * performance.now();
-	// const saturn_t = (saturn_time % loopTime) / loopTime;
-	// let saturn_p = saturnOrbit.getPoint(-saturn_t);
-	// saturn.position.x = saturn_p.x;
-	// saturn.position.z = saturn_p.y;
+	saturn.rotation.y += 0.01;
+	const saturn_time = saturnOrbitSpeed * performance.now();
+	const saturn_t = (saturn_time % loopTime) / loopTime;
+	let saturn_p = saturnOrbit.getPoint(saturn_t);
+	saturn.position.x = -saturn_p.x;
+	saturn.position.z = saturn_p.y;
 
+	ringMesh.position.set(saturn.position.x, 0, saturn.position.z);
+
+	/* uranus */
+	uranus.rotation.y += 0.01;
+	const uranus_time = uranusOrbitSpeed * performance.now();
+	const uranus_t = (uranus_time % loopTime) / loopTime;
+	let uranus_p = uranusOrbit.getPoint(uranus_t);
+	uranus.position.x = uranus_p.x;
+	uranus.position.z = uranus_p.y;
+
+	/* neptune */
+	neptune.rotation.y += 0.01;
+	const neptune_time = neptuneOrbitSpeed * performance.now();
+	const neptune_t = (neptune_time % loopTime) / loopTime;
+	let neptune_p = neptuneOrbit.getPoint(neptune_t);
+	neptune.position.x = -neptune_p.x;
+	neptune.position.z = neptune_p.y;
 
 	/* earth */
 	earth.rotation.y += 0.01;
@@ -234,3 +287,5 @@ function onWindowResize() {
 	renderer.setSize( window.innerWidth, window.innerHeight );
 
 }
+
+

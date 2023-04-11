@@ -12,8 +12,6 @@ const marsTextureMap = textureLoader.load('assets/mars.webp');
 const jupiterTextureMap = textureLoader.load('assets/jupiter.jpg');
 const saturnTextureMap = textureLoader.load('assets/saturn.webp');
 
-
-
 const scene = new THREE.Scene();
 scene.background = backgroup;
 

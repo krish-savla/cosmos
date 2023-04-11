@@ -73,35 +73,30 @@ select {
   }
 }
 
-.main-div {
-    display: grid;
-    margin: auto;
-    place-items: center;
-    height: 100vh;
-    width: 100vw;
+body {
+    background-color: black;
 }
 
-.button-div {
-    display: flex;
-    gap: 10px;
+.actual-content {
+    display: inline-flex; 
+    align-items: center;
+    flex-shrink: 0;
+    margin-top: 15vh;
 }
 
-.nav-button {
-    border: 0px solid black;
-    color: black;
-    font-family:Arial, Helvetica, sans-serif;
-    background-color: white;
-    text-decoration: underline;
-    font-size: 18px;
+.distance-header {
+    color: white;
+    font-family: "Helvetica", sans-serif;
+    margin: 5vw;
 }
 
-.instructions {
-    transition: opacity 300ms;
-    margin-top: 40px;
-    max-width: 80%;
-    color: black;
-    font-size: 14px;
-    opacity: 0;
+h4 {
+    color: white;
+    margin-top: 15px;
+    font-family: "Helvetica", sans-serif;
+    font-weight: normal;
 }
 
-
+h3 {
+    font-weight: normal;
+}

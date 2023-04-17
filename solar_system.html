@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Solar system</title>
+		<style>
+			body { margin: 0; }
+			h4 {
+				margin: 0;
+				padding: 20px;
+				background-color: black;
+				color: white;
+				font-family: Arial, Helvetica, sans-serif;
+			}
+			a {
+				color: white;
+				text-decoration: none;
+			}
+			a:hover {
+				color: gray;
+			}
+		</style>
+        <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+
+        <script type="importmap">
+          {
+            "imports": {
+              "three": "https://unpkg.com/three@v0.151.2/build/three.module.js",
+              "three/addons/": "https://unpkg.com/three@v0.151.2/examples/jsm/"
+            }
+          }
+        </script>
+	</head>
+	<body>
+		<h4 style="position: absolute; background-color: transparent; color: white;"><a href="index.html">⬅ Back</a></h4>
+		<!-- <div id="earth">earth</div> -->
+		<script type="module" src="/solar_system.js"></script>
+	</body>
+</html>

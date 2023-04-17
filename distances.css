@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behaviour: smooth !important;
+}
+
 /* Remove default margin */
 body,
 h1,
